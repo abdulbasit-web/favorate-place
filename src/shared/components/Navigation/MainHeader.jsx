@@ -1,10 +1,10 @@
 import React from 'react';
 
 import './MainHeader.css';
-import MainNavigation from './MainNavigation'
 
-const MainHeader = () => {
-  return <header className="main-header"><MainNavigation/></header>;
+
+const MainHeader = (props) => {
+return <header className="main-header">{props.children}</header>;
 };
 
 export default MainHeader;
