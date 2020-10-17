@@ -10,7 +10,7 @@ function UsersList({items}) {
         <h2>No User Found.</h2>
       </div>
     ):(
-    <ul>
+    <ul className="users-list">
       {items.map(user=>
         <UserItem key={user.id} {...user}/>
       )}
