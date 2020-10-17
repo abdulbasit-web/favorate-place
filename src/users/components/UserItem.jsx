@@ -10,8 +10,6 @@ import './UserItem.css'
 function UserItem(props) {
 
   const {id , name , image,places} = props
-
-
   return (
     <li className="user-item">
         <Card className="user-item__content">
