@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/FormElements/Button'
 import Modal from '../../shared/components/UIElements/Modal'
+import Map from '../../shared/components/UIElements/Map'
 import './PlaceItem.css'
 
 function PlaceItem(props) {
@@ -12,7 +13,7 @@ function PlaceItem(props) {
   const closeMapHandler = () => setShowMap(false)
 
   // {id: "p1", title: "Empire State Building", description: "One of the most famous sky scrapers in the world!", imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thu…_Building.jpg/640px-NYC_Empire_State_Building.jpg", address: "20 W 34th St, New York, NY 10001", …}
-  const {imageUrl, title, address, description, id} = props
+  const {imageUrl, title, address, description, id, location} = props
 
   return (
     <React.Fragment>
@@ -25,7 +26,7 @@ function PlaceItem(props) {
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className='map-container'>
-          <h2>THE MAP</h2>
+          <Map center={location} zoom={16} />
         </div>
       </Modal>
 
