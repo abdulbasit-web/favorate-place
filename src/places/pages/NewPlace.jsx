@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Input from '../../shared/components/FormElements/Input'
+import {VALIDATOR_REQUIRE} from '../../shared/util/validators'
 import './NewPlace.css'
 
 function NewPlace() {
@@ -10,7 +11,7 @@ function NewPlace() {
         type='text'
         label='Title'
         element={'input'}
-        validator={[]}
+        validators={[VALIDATOR_REQUIRE()]}
         errorText='please enter a valid title.'
       />
     </form>
