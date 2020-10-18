@@ -38,6 +38,10 @@ function NewPlace() {
         value: '',
         isValid: false,
       },
+      address: {
+        value: '',
+        isValid: false,
+      },
     },
     isValid: false,
   })
@@ -49,8 +53,15 @@ function NewPlace() {
     dispatch({type: 'INPUT_CHANGE', inputId: id, isValid, value})
   }, [])
 
+
+  const handleSubmit= (e)=>{
+    e.preventDefault()
+    console.log(formState);
+    //send data to the server.....
+  }
+
   return (
-    <form className='place-form'>
+    <form className='place-form' onSubmit={handleSubmit}>
       <Input
         id='title'
         onInput={inputHandler}
@@ -67,6 +78,14 @@ function NewPlace() {
         element={'textarea'}
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText='please enter a valid description (at least 5 characters).'
+      />
+      <Input
+        id='address'
+        onInput={inputHandler}
+        label='Address'
+        element={'input'}
+        validators={[VALIDATOR_REQUIRE()]}
+        errorText='please enter a valid Address.'
       />
       <Button type='submit' disabled={!formState.isValid}>
         ADD PLACE
