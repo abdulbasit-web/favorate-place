@@ -15,11 +15,23 @@ const reducer = (state, action) => {
 }
 
 function Input(props) {
-  const {element, id, label, type, placeholder, rows, errorText, validators, onInput} = props
+  const {
+    element,
+    id,
+    label,
+    type,
+    placeholder,
+    rows,
+    errorText,
+    validators,
+    onInput,
+
+    valid,
+  } = props
 
   const [inputState, dispatch] = useReducer(reducer, {
-    value: '',
-    isValid: false,
+    value: props.value || '',
+    isValid: valid || false,
     isTouched: false,
   })
 
