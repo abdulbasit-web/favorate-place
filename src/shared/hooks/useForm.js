@@ -22,7 +22,7 @@ function reducer(state, action) {
   }
 }
 
-function useForm(initialFormValidity , initialInputs) {
+function useForm(initialInputs,initialFormValidity) {
   const [formState, dispatch] = useReducer(reducer, {
     inputs: initialInputs,
     isValid: initialFormValidity,

@@ -5,41 +5,60 @@ import Button from '../../shared/components/FormElements/Button'
 import Card from '../../shared/components/UIElements/Card'
 import Input from '../../shared/components/FormElements/Input'
 import {VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from '../../shared/util/validators'
-
+import useForm from '../../shared/hooks/useForm'
 import './UpdatePlace.css'
+
+const DUMMY_PLACES = [
+  {
+    id: 'p1',
+    title: 'Empire State Building',
+    description: 'One of the most famous sky scrapers in the world!',
+    imageUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
+    address: '20 W 34th St, New York, NY 10001',
+    location: {
+      lat: 40.7484405,
+      lng: -73.9878584,
+    },
+    creator: 'u1',
+  },
+  {
+    id: 'p2',
+    title: 'Evil Tower',
+    description: 'One of the most famous sky scrapers in the world!',
+    imageUrl: 'https://i.insider.com/58d919eaf2d0331b008b4bbd?width=600&format=jpeg&auto=webp',
+    address: '20 W 34th St, New York, NY 10001',
+    location: {
+      lat: 40.7484405,
+      lng: -73.9878584,
+    },
+    creator: 'u2',
+  },
+]
 
 function UpdatePlace() {
   const {placeId} = useParams()
-
-  const DUMMY_PLACES = [
-    {
-      id: 'p1',
-      title: 'Empire State Building',
-      description: 'One of the most famous sky scrapers in the world!',
-      imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/NYC_Empire_State_Building.jpg/640px-NYC_Empire_State_Building.jpg',
-      address: '20 W 34th St, New York, NY 10001',
-      location: {
-        lat: 40.7484405,
-        lng: -73.9878584,
-      },
-      creator: 'u1',
-    },
-    {
-      id: 'p2',
-      title: 'Evil Tower',
-      description: 'One of the most famous sky scrapers in the world!',
-      imageUrl: 'https://i.insider.com/58d919eaf2d0331b008b4bbd?width=600&format=jpeg&auto=webp',
-      address: '20 W 34th St, New York, NY 10001',
-      location: {
-        lat: 40.7484405,
-        lng: -73.9878584,
-      },
-      creator: 'u2',
-    },
-  ]
-
   const currentPlace = DUMMY_PLACES.find(place => place.id === placeId)
+
+  const [formState, inputHandler] = useForm(
+    {
+      title: {
+        value: currentPlace.title,
+        isValid: true,
+      },
+      description: {
+        value: currentPlace.description,
+        isValid: true,
+      },
+    },
+    true
+  )
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    console.log(formState)
+    //send data to the server.....
+  }
 
   if (!currentPlace) {
     return (
@@ -52,29 +71,29 @@ function UpdatePlace() {
   }
 
   return (
-    <form className='place-form'>
+    <form className='place-form' onSubmit={handleSubmit}>
       <Input
         id='title'
         element='input'
         type='text'
         label='title'
-        onInput={() => {}}
+        onInput={inputHandler}
         validators={[VALIDATOR_REQUIRE()]}
         errorText='Plase enter a valid title.'
-        value={currentPlace.title}
-        valid={true}
+        initialValue={formState.inputs.title.value}
+        inisialValid={formState.inputs.title.isValid}
       />
       <Input
         id='description'
         element='textarea'
         label='Description'
-        onInput={() => {}}
+        onInput={inputHandler}
         validators={[VALIDATOR_MINLENGTH(5)]}
         errorText='Plase enter a valid description (at least 5 characters).'
-        value={currentPlace.title}
-        valid={true}
+        initialValue={formState.inputs.description.value}
+        inisialValid={formState.inputs.description.isValid}
       />
-      <Button type='submit' disabled={true}>
+      <Button type='submit' disabled={!formState.isValid}>
         UPDATE PLACE
       </Button>
     </form>
