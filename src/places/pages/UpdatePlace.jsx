@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 
 import Button from '../../shared/components/FormElements/Button'
@@ -38,21 +38,43 @@ const DUMMY_PLACES = [
 
 function UpdatePlace() {
   const {placeId} = useParams()
-  const currentPlace = DUMMY_PLACES.find(place => place.id === placeId)
+  const [loading, setLoading] = useState(true)
 
-  const [formState, inputHandler] = useForm(
+  const [formState, inputHandler, setFormData] = useForm(
     {
       title: {
-        value: currentPlace.title,
-        isValid: true,
+        value: '',
+        isValid: false,
       },
       description: {
-        value: currentPlace.description,
-        isValid: true,
+        value: '',
+        isValid: false,
       },
     },
-    true
+    false
   )
+
+  console.log(placeId)
+  const currentPlace = DUMMY_PLACES.find(place => place.id === placeId)
+
+  useEffect(() => {
+    if (currentPlace) {
+      setFormData(
+        {
+          title: {
+            value: currentPlace.title,
+            isValid: true,
+          },
+          description: {
+            value: currentPlace.description,
+            isValid: true,
+          },
+        },
+        true
+      )
+    }
+    setLoading(false)
+  }, [setFormData, currentPlace])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -64,7 +86,17 @@ function UpdatePlace() {
     return (
       <div className='center'>
         <Card>
-          <h2>could not find place :).</h2>
+          <h2>could not find place :)</h2>
+        </Card>
+      </div>
+    )
+  }
+
+  if (loading) {
+    return (
+      <div className='center'>
+        <Card>
+          <h2>Loading....</h2>
         </Card>
       </div>
     )

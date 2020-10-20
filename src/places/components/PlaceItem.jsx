@@ -8,9 +8,18 @@ import './PlaceItem.css'
 
 function PlaceItem(props) {
   const [showMap, setShowMap] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   const openMapHandler = () => setShowMap(true)
   const closeMapHandler = () => setShowMap(false)
+
+  const openDeleteModal = () => setShowDeleteModal(true)
+  const closeDeleteModal = () => setShowDeleteModal(false)
+
+  const handleDelete = () => {
+    setShowDeleteModal(false)
+    console.log('DELETE.....')
+  }
 
   // {id: "p1", title: "Empire State Building", description: "One of the most famous sky scrapers in the world!", imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thu…_Building.jpg/640px-NYC_Empire_State_Building.jpg", address: "20 W 34th St, New York, NY 10001", …}
   const {imageUrl, title, address, description, id, location} = props
@@ -30,6 +39,28 @@ function PlaceItem(props) {
         </div>
       </Modal>
 
+      <Modal
+        header='Are you sure?'
+        show={showDeleteModal}
+        onCancel={closeDeleteModal}
+        footerClass='place-item__modal-actions'
+        footer={
+          <React.Fragment>
+            <Button inverse onClick={closeDeleteModal}>
+              CANCEL
+            </Button>
+            <Button danger onClick={handleDelete}>
+              DELETE
+            </Button>
+          </React.Fragment>
+        }
+      >
+        <p>
+          Do you went to proceed and delete this place? Place note that is can be restore after
+          that.
+        </p>
+      </Modal>
+
       <li className='place-item'>
         <Card className='place-item__content'>
           <div className='place-item__image'>
@@ -45,7 +76,9 @@ function PlaceItem(props) {
               VIEW ON MAP
             </Button>
             <Button to={`/places/${id}`}>EDIT</Button>
-            <Button danger>DELETE</Button>
+            <Button danger onClick={openDeleteModal}>
+              DELETE
+            </Button>
           </div>
         </Card>
       </li>

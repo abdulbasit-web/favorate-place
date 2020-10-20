@@ -43,14 +43,14 @@
   text-align: right;
 }
 
-.map-container {
-  height: 85%;
-  width: 100%;
-}
-
 .place-item__actions button,
 .place-item__actions a {
   margin: 0.5rem;
+}
+
+.map-container {
+  height: 15rem;
+  width: 100%;
 }
 
 @media (min-width: 768px) {

@@ -1,22 +1,25 @@
 import React from 'react'
+import Button from '../../shared/components/FormElements/Button'
 
 import Card from '../../shared/components/UIElements/Card'
 import PlaceItem from './PlaceItem'
-import  './PlaceList.css'
+import './PlaceList.css'
 
 function PlaceList(props) {
   return (
     <>
-      {props.items.length===0 ? (
-        <div className="place-list ceneter">
+      {props.items.length === 0 ? (
+        <div className='place-list center'>
           <Card>
             <h2>No place found, Maybe create one?</h2>
-            <button>Share place</button>
+            <Button to='/places/new'>Share place</Button>
           </Card>
         </div>
-      ): (
+      ) : (
         <ul className='place-list'>
-          {props.items.map(place=><PlaceItem key={place.id} {...place}/>)}
+          {props.items.map(place => (
+            <PlaceItem key={place.id} {...place} />
+          ))}
         </ul>
       )}
     </>

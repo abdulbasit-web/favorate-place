@@ -21,6 +21,7 @@ function App() {
         <Route path='/places/new'>
           <NewPlace />
         </Route>
+        
         <Route path='/places/new'>
           <NewPlace />
         </Route>
