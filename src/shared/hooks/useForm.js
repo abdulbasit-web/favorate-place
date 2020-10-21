@@ -5,6 +5,9 @@ function reducer(state, action) {
     case 'INPUT_CHANGE':
       let formValid = true
       for (const inputId in state.inputs) {
+        if(!state.inputs[inputId]){
+          continue
+        }
         if (inputId === action.inputId) formValid = formValid && action.isValid
         else formValid = formValid && state.inputs[inputId].isValid
       }

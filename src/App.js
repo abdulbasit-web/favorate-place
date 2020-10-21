@@ -7,6 +7,7 @@ import UpdatePlace from './places/pages/UpdatePlace'
 import MainNavigation from './shared/components/Navigation/MainNavigation'
 import NotFound from './shared/components/NotFound'
 import Users from './users/pages/Users'
+import Auth from './users/pages/Auth'
 
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
         </Route>
         <Route path='/places/new'>
           <NewPlace />
+        </Route>
+        <Route path='/auth'>
+          <Auth />
         </Route>
         
         <Route path='/places/new'>
