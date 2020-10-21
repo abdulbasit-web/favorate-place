@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import Button from '../../shared/components/FormElements/Button'
 
 import Input from '../../shared/components/FormElements/Input'
 import Card from '../../shared/components/UIElements/Card'
+import { AuthContext } from '../../shared/context/AuthContext'
 import useForm from '../../shared/hooks/useForm'
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../shared/util/validators'
 import './Auth.css'
 
 function Auth() {
+  const auth = useContext(AuthContext)
+  const history = useHistory()
   const [isLoginMode, setIsLoginMode] = useState(true);
 
   const [formState, inputHandler, setFormData] = useForm(
@@ -51,6 +55,9 @@ function Auth() {
   const authSubmitHandler = event => {
     event.preventDefault();
     console.log(formState.inputs);
+    auth.login()
+    history.push('/')
+   
   };
 
   return (
