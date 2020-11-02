@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react'
-import axios from 'axios'
 
 import Button from '../../shared/components/FormElements/Button'
 import Input from '../../shared/components/FormElements/Input'
@@ -128,8 +127,8 @@ function Auth() {
             id='password'
             type='password'
             label='Password'
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText='Please enter a valid password, at least 5 characters.'
+            validators={[VALIDATOR_MINLENGTH(6)]}
+            errorText='Please enter a valid password, at least 6 characters.'
             onInput={inputHandler}
           />
           <Button type='submit' disabled={!formState.isValid}>
