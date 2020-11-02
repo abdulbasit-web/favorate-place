@@ -11,8 +11,8 @@ import Auth from './users/pages/Auth'
 import {AuthContext} from './shared/context/AuthContext'
 
 function App() {
-  const {isLoggedIn} = useContext(AuthContext)
-  console.log(isLoggedIn)
+  const {isLoggedIn, userId} = useContext(AuthContext)
+  console.log('is Logged in=>>> ' + isLoggedIn, 'userId =>>> ', userId)
 
   let routes
   if (isLoggedIn) {

@@ -6,7 +6,7 @@ import {AuthContext} from '../../context/AuthContext'
 
 function NavLinks() {
   const {isLoggedIn, logout} = useContext(AuthContext)
-  console.log(isLoggedIn)
+
   return (
     <ul className='nav-links'>
       <li>

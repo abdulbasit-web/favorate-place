@@ -37,12 +37,13 @@
   color: #ffd900;
 }
 
-.user-item:active h2,
-.user-item:active h3,
 .user-item:hover h2,
-.user-item:hover h3 {
+.user-item:active h2,
+.user-item:hover h3,
+.user-item:active h3 {
   color: #292929;
 }
+
 .user-item__info h3 {
   margin: 0;
 }

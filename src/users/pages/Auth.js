@@ -10,12 +10,12 @@ import {VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE} from '../../sha
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import './Auth.css'
+import {useHttp} from '../../shared/hooks/useHttp'
 
 function Auth() {
   const auth = useContext(AuthContext)
   const [isLoginMode, setIsLoginMode] = useState(true)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const {isLoading, error, sendRequest, clearError} = useHttp()
 
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -58,53 +58,46 @@ function Auth() {
   //submit form
   const authSubmitHandler = async event => {
     event.preventDefault()
-    setIsLoading(true)
+
     if (isLoginMode) {
       try {
-        const responseData = await axios.post('http://localhost:5000/api/users/login', {
-          password: formState.inputs.password.value,
-          email: formState.inputs.email.value,
-        })
+        const responsData = await sendRequest(
+          'http://localhost:5000/api/users/login',
+          'POST',
+          JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+          {
+            'Content-Type': 'application/json',
+          }
+        )
 
-        if (!responseData.ok) {
-          throw new Error(responseData.message)
-        }
-
-        setIsLoading(false)
-        auth.login()
-      } catch (err) {
-        setIsLoading(false)
-        setError(err.message || 'Something went wrong, please try again')
-      }
+        auth.login(responsData.user.id)
+      } catch (err) {}
     } else {
       try {
-        const responseData = await axios.get('http://localhost:5000/api/users/signup', {
-          name: formState.inputs.name.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        })
+        const responsData = await sendRequest(
+          'http://localhost:5000/api/users/signup',
+          'POST',
+          JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+          {
+            'Content-Type': 'application/json',
+          }
+        )
 
-        //check if the response data is okey or not
-        if (!responseData.ok) {
-          throw new Error(responseData.message)
-        }
-
-        setIsLoading(false)
-        auth.login()
-      } catch (err) {
-        setIsLoading(false)
-        setError(err.message || 'Something went wrong, please try again')
-      }
+        auth.login(responsData.user.id)
+      } catch (err) {}
     }
-  }
-
-  function errorHandler() {
-    setError(null)
   }
 
   return (
     <>
-      <ErrorModal onClear={errorHandler} error={error} />
+      <ErrorModal onClear={clearError} error={error} />
       <Card className='authentication'>
         {isLoading && <LoadingSpinner asOverlay />}
         <h2>Login Required</h2>
