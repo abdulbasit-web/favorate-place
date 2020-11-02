@@ -61,19 +61,12 @@ function Auth() {
     setIsLoading(true)
     if (isLoginMode) {
       try {
-        const response = await fetch('http://localhost:5000/api/users/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
+        const responseData = await axios.post('http://localhost:5000/api/users/login', {
+          password: formState.inputs.password.value,
+          email: formState.inputs.email.value,
         })
 
-        const responseData = await response.json()
-        if (!response.ok) {
+        if (!responseData.ok) {
           throw new Error(responseData.message)
         }
 
@@ -85,20 +78,14 @@ function Auth() {
       }
     } else {
       try {
-        const response = await fetch('http://localhost:5000/api/users/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: formState.inputs.name.value,
-            email: formState.inputs.email.value,
-            password: formState.inputs.password.value,
-          }),
+        const responseData = await axios.get('http://localhost:5000/api/users/signup', {
+          name: formState.inputs.name.value,
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
         })
 
-        const responseData = await response.json()
-        if (!response.ok) {
+        //check if the response data is okey or not
+        if (!responseData.ok) {
           throw new Error(responseData.message)
         }
 

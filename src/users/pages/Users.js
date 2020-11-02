@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import axios from 'axios'
 
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
@@ -13,13 +14,14 @@ function Users() {
     const getUser = async () => {
       setIsLoading(true)
       try {
-        const response = await fetch('http://localhost:5000/api/users')
-        const responseData = await response.json()
-        console.log(responseData)
-        setUsers(responseData.users)
-        if (!response.ok) {
+        const responseData = await axios.get('http://localhost:5000/api/users')
+
+        setUsers(responseData.data.users)
+
+        if (!responseData.ok) {
           throw new Error(responseData.message)
         }
+
         setIsLoading(false)
       } catch (err) {
         setIsLoading(false)
