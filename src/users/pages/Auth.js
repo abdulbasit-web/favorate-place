@@ -62,7 +62,6 @@ function Auth() {
 
   //submit form
   const authSubmitHandler = async event => {
-    console.log(formState.inputs)
     event.preventDefault()
 
     if (isLoginMode) {
@@ -79,7 +78,7 @@ function Auth() {
           }
         )
 
-        auth.login(responsData.user.id)
+        auth.login(responsData.userId, responsData.token)
       } catch (err) {}
     } else {
       try {
@@ -94,7 +93,7 @@ function Auth() {
           formData
         )
 
-        auth.login(responsData.user.id)
+        auth.login(responsData.userId, responsData.token)
       } catch (err) {}
     }
   }

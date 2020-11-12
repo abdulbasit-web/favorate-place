@@ -13,7 +13,7 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 function PlaceItem(props) {
   const [showMap, setShowMap] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const {userId} = useContext(AuthContext)
+  const {userId, token} = useContext(AuthContext)
   const {error, isLoading, sendRequest, clearError} = useHttp()
 
   const {image, title, address, description, id, location, creator} = props
@@ -26,7 +26,9 @@ function PlaceItem(props) {
   const handleDelete = async () => {
     setShowDeleteModal(false)
     try {
-      await sendRequest(`http://localhost:5000/api/places/${id}`, 'DELETE')
+      await sendRequest(`http://localhost:5000/api/places/${id}`, 'DELETE', null, {
+        Authorization: 'Bearer ' + token,
+      })
       props.onDelete(id)
     } catch (err) {}
   }
